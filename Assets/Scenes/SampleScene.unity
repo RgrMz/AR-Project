@@ -245,11 +245,11 @@ Transform:
   m_GameObject: {fileID: 716709481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2034532805}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &716709483
 BoxCollider:
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 2034532805}
   - component: {fileID: 2034532804}
   - component: {fileID: 2034532803}
-  - component: {fileID: 2034532802}
+  - component: {fileID: 2034532806}
   m_Layer: 0
   m_Name: ImageTarget
   m_TagString: Untagged
@@ -445,25 +445,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2034532802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034532801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mObserverBehaviour: {fileID: 2034532804}
-  mHiddenRoot: {fileID: 0}
-  mTargetName: patron_basico_img
-  mDatasetName: 
-  mCastedBehaviour: {fileID: 2034532804}
-  mMeshFilter: {fileID: 0}
-  mMeshRenderer: {fileID: 0}
 --- !u!114 &2034532803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,18 +504,18 @@ MonoBehaviour:
   PreviewVisible: 1
   RuntimeOcclusion: 0
   RuntimeCollider: 0
-  mTrackableName: patron_basico_img
+  mTrackableName: pp5
   mInitializedInEditor: 1
-  mDataSetPath: 
-  mAspectRatio: 0.6727431
-  mImageTargetType: 3
-  mWidth: 0.2
-  mHeight: 0.13454862
-  mRuntimeTexture: {fileID: 2800000, guid: 4a4bc16b2bb3e104f8808114f7b25a08, type: 3}
+  mDataSetPath: Vuforia/Puzzle7EditedImgs.xml
+  mAspectRatio: 1.0025849
+  mImageTargetType: 0
+  mWidth: 0.20000002
+  mHeight: 0.200517
+  mRuntimeTexture: {fileID: 0}
   mMotionHint: 1
   mTrackingOptimization: 0
   mTrackingOptimizationNeedsUpgrade: 0
-  mPreview: {fileID: 2034532802}
+  mPreview: {fileID: 2034532806}
 --- !u!4 &2034532805
 Transform:
   m_ObjectHideFlags: 0
@@ -542,7 +523,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034532801}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.99020076, z: -0, w: -0.13965142}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -550,4 +531,23 @@ Transform:
   - {fileID: 716709482}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 196.055, z: 0}
+--- !u!114 &2034532806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034532801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 2034532804}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: pp5
+  mDatasetName: Vuforia/Puzzle7EditedImgs.xml
+  mCastedBehaviour: {fileID: 2034532804}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}

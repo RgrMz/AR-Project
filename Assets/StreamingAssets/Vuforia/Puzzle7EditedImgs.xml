@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="pp5" size="0.200000 0.200517" />
+    <ImageTarget name="pp6" size="0.200000 0.201262" />
+    <ImageTarget name="pp4" size="0.200000 0.200000" />
+    <ImageTarget name="pp3" size="0.200000 0.200536" />
+    <ImageTarget name="pp2" size="0.200000 0.199195" />
+    <ImageTarget name="pp1" size="0.200000 0.200532" />
+    <ImageTarget name="pp9" size="0.200000 0.200273" />
+    <ImageTarget name="pp8" size="0.200000 0.201667" />
+    <ImageTarget name="pp7" size="0.200000 0.199443" />
+  </Tracking>
+</QCARConfig>
