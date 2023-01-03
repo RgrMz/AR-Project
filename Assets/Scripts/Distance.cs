@@ -28,6 +28,6 @@ public class Distance : MonoBehaviour
             neon2.SetActive(true);
         }
 
-        Debug.Log(distance);
+        //Debug.Log(distance);
     }
 }
