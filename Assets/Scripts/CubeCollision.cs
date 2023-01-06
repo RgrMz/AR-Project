@@ -17,6 +17,8 @@ public class CubeCollision : MonoBehaviour
     private GameObject parentOther;
 
     private bool isPlaced;
+
+    private GameObject scoreManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +31,6 @@ public class CubeCollision : MonoBehaviour
         neonRedThis = parent.transform.Find("RedNeon").gameObject;
 
         isPlaced = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +54,7 @@ public class CubeCollision : MonoBehaviour
                 neonGreenOther.SetActive(true);
 
                 isPlaced = true;
+                scoreManager.GetComponent<ScoreManager>().addScore();
             }
             else
             {
@@ -89,6 +86,10 @@ public class CubeCollision : MonoBehaviour
                 {
                     neonGreenOther.SetActive(false);
                     neonRedOther.SetActive(false);
+                    isPlaced = false;
+                    other.gameObject.GetComponent<CubeCollision>().isPlaced = false;
+
+                    scoreManager.GetComponent<ScoreManager>().reduceScore();
                 }
             }
         } else
