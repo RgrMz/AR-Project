@@ -19,6 +19,8 @@ public class CubeCollision : MonoBehaviour
     private bool isPlaced;
 
     private GameObject scoreManager;
+
+    private ParticleSystem placedCorrectParticle;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,8 @@ public class CubeCollision : MonoBehaviour
         neonRedThis = parent.transform.Find("RedNeon").gameObject;
 
         isPlaced = false;
+
+        placedCorrectParticle = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,17 +48,19 @@ public class CubeCollision : MonoBehaviour
 
         if (compatibleCube != null)
         {
-            Debug.Log("awachinao antes del if");
             if (other.gameObject.Equals(compatibleCube))
             {
-                Debug.Log("awachinao despues del if");
+                Debug.Log("OnTriggerEnter llamado");
                 neonRedThis.SetActive(false);
                 neonRedOther.SetActive(false);
                 neonGreenThis.SetActive(true);
                 neonGreenOther.SetActive(true);
 
                 isPlaced = true;
-                scoreManager.GetComponent<ScoreManager>().addScore();
+                //scoreManager.GetComponent<ScoreManager>().addScore();
+
+                Debug.Log(placedCorrectParticle.name);
+                placedCorrectParticle.Play();
             }
             else
             {
@@ -86,11 +92,20 @@ public class CubeCollision : MonoBehaviour
                 {
                     neonGreenOther.SetActive(false);
                     neonRedOther.SetActive(false);
+
                     isPlaced = false;
-                    other.gameObject.GetComponent<CubeCollision>().isPlaced = false;
 
                     scoreManager.GetComponent<ScoreManager>().reduceScore();
-                }
+                } else if (!this.isPlaced && !other.gameObject.GetComponent<CubeCollision>().getIsPlaced())
+                {
+                    neonGreenOther.SetActive(false);
+                    neonRedOther.SetActive(false);
+                } 
+            }
+            else
+            {
+                neonRedOther.SetActive(false);
+                neonRedThis.SetActive(false);
             }
         } else
         {
