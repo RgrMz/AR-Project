@@ -16,25 +16,26 @@ public class CubeCollision : MonoBehaviour
 
     private GameObject parentOther;
 
-    private bool isPlaced;
-
-    private GameObject scoreManager;
-
     private ParticleSystem placedCorrectParticle;
+    private ParticleSystem.EmissionModule emission;
+
+    private GameObject mark;
     // Start is called before the first frame update
     void Start()
     {
 
         // Get the neon lights of the mark where the cube is
-        GameObject parent = this.transform.parent.gameObject;
-        //Debug.Log(String.Format("{1}: {0}/GreenNeon", parentName, this.gameObject.name));
+        mark = this.transform.parent.gameObject;
 
-        neonGreenThis = parent.transform.Find("GreenNeon").gameObject;
-        neonRedThis = parent.transform.Find("RedNeon").gameObject;
+        neonGreenThis = mark.transform.Find("GreenNeon").gameObject;
+        neonRedThis = mark.transform.Find("RedNeon").gameObject;
 
-        isPlaced = false;
-
-        placedCorrectParticle = GetComponentInChildren<ParticleSystem>();
+        if (GetComponentInChildren<ParticleSystem>() != null)
+        {
+            placedCorrectParticle = GetComponentInChildren<ParticleSystem>();
+            emission = placedCorrectParticle.emission;
+            emission.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +43,9 @@ public class CubeCollision : MonoBehaviour
         // Get the neon lights of the collided mark
         parentOther = other.gameObject.transform.parent.gameObject;
         //Debug.Log(String.Format("{0}/GreenNeon", parentOther));
+        // Ver que aristas han colisionado para ponerlos como colocados
+        string sideThis = gameObject.name.Remove(0, 4);
+        string sideOther = other.gameObject.name.Remove(0, 4);
 
         neonGreenOther = parentOther.transform.Find("GreenNeon").gameObject;
         neonRedOther = parentOther.transform.Find("RedNeon").gameObject;
@@ -56,22 +60,33 @@ public class CubeCollision : MonoBehaviour
                 neonGreenThis.SetActive(true);
                 neonGreenOther.SetActive(true);
 
-                isPlaced = true;
+                mark.GetComponent<MarkController>().setSidePlaced(sideThis);
+                other.gameObject.GetComponent<CubeCollision>().getMark().GetComponent<MarkController>().setSidePlaced(sideOther);
                 //scoreManager.GetComponent<ScoreManager>().addScore();
 
                 Debug.Log(placedCorrectParticle.name);
-                placedCorrectParticle.Play();
+                emission.enabled = true;
+                StartCoroutine(stopParticle());
             }
             else
             {
-                neonGreenThis.SetActive(false);
-                neonRedThis.SetActive(true);
-                Debug.Log(String.Format("{0}/{1} {2}", other.gameObject.transform.parent.name, other.gameObject.name, other.gameObject.GetComponent<CubeCollision>().getIsPlaced()));
-                if (!other.gameObject.GetComponent<CubeCollision>().getIsPlaced())
+                if (mark.GetComponent<MarkController>().isAnySidePlaced())
                 {
-                    neonGreenOther.SetActive(false);
+                    neonRedOther.SetActive(true);
+                    neonGreenThis.SetActive(true);
+                } else
+                {
+                    neonRedThis.SetActive(true);
                     neonRedOther.SetActive(true);
                 }
+
+                if (other.gameObject.GetComponent<CubeCollision>() == null)
+                {
+                    // Es una arista con ninguna compatible, allá donde se ponga está mal colocada
+                    neonRedOther.SetActive(true);
+                    neonRedThis.SetActive(true);
+                }
+                
                     
             }
         } else
@@ -82,21 +97,57 @@ public class CubeCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        string sideThis = gameObject.name.Remove(0, 4);
+        string sideOther = other.gameObject.name.Remove(0, 4);
+
+        // Quitar los lados que antes estaban colocados
+        mark.GetComponent<MarkController>().resetSide(sideThis);
+        if (other.gameObject.GetComponent<CubeCollision>() != null)
+            other.gameObject.GetComponent<CubeCollision>().getMark().GetComponent<MarkController>().resetSide(sideOther);
+        else
+            neonRedOther.SetActive(false);
+
         if (compatibleCube != null)
         {
             if (other.gameObject.Equals(compatibleCube))
             {
-                neonGreenThis.SetActive(false);
+                if (mark.GetComponent<MarkController>().isAnySidePlaced())
+                {
+                    neonRedOther.SetActive(false);
+                    neonGreenOther.SetActive(false);
+                    neonGreenThis.SetActive(true);
+                } else
+                {
+                    neonRedOther.SetActive(false);
+                    neonGreenOther.SetActive(false);
+                    neonGreenThis.SetActive(false);
+                }
+            } else
+            {
+                if (mark.GetComponent<MarkController>().isAnySidePlaced())
+                {
+                    neonRedOther.SetActive(false);
+                    neonGreenOther.SetActive(false);
+                    neonGreenThis.SetActive(true);
+                } else
+                {
+                    neonRedOther.SetActive(false);
+                    neonRedThis.SetActive(false);
+                }
+            }
+                /*neonGreenThis.SetActive(false);
                 neonRedThis.SetActive(false);
-                if (this.isPlaced && other.gameObject.GetComponent<CubeCollision>().getIsPlaced())
+                if (mark.GetComponent<MarkController>().getIsPlaced() && 
+                    other.gameObject.GetComponent<CubeCollision>().getMark().GetComponent<MarkController>().getIsPlaced())
                 {
                     neonGreenOther.SetActive(false);
                     neonRedOther.SetActive(false);
 
-                    isPlaced = false;
+                    //mark.GetComponent<MarkController>().setPlaced(false);
 
-                    scoreManager.GetComponent<ScoreManager>().reduceScore();
-                } else if (!this.isPlaced && !other.gameObject.GetComponent<CubeCollision>().getIsPlaced())
+                    //scoreManager.GetComponent<ScoreManager>().reduceScore();
+                } else if (!mark.GetComponent<MarkController>().getIsPlaced() && 
+                    !other.gameObject.GetComponent<CubeCollision>().getMark().GetComponent<MarkController>().getIsPlaced())
                 {
                     neonGreenOther.SetActive(false);
                     neonRedOther.SetActive(false);
@@ -106,15 +157,31 @@ public class CubeCollision : MonoBehaviour
             {
                 neonRedOther.SetActive(false);
                 neonRedThis.SetActive(false);
+                if (other.gameObject.GetComponent<CubeCollision>() != null)
+                {
+                    if (other.gameObject.GetComponent<CubeCollision>().getMark().GetComponent<MarkController>().getIsPlaced())
+                        neonGreenOther.SetActive(false);
+                } else
+                {
+                    if (mark.GetComponent<MarkController>().getIsPlaced())
+                        neonGreenThis.SetActive(true);
+                }*/
+                
             }
-        } else
+        }/* else
         {
             neonRedThis.SetActive(false);
-        }
+        }*/
+
+    IEnumerator stopParticle()
+    {
+        yield return new WaitForSeconds(3f);
+
+        emission.enabled = false;
     }
 
-    public bool getIsPlaced()
+    public GameObject getMark()
     {
-        return isPlaced;
+        return this.mark;
     }
 }
