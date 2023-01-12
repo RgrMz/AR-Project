@@ -4,32 +4,22 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI scoreText;
-    private int _score;
-    public int Score { get; set; }
-    private static int TOTAL_PIECES = 9;
+    private GameObject[] representations;
     // Start is called before the first frame update
     void Start()
     {
-        Score = 0;
-        scoreText.text = string.Format("{0}/9 PIECES PLACED", Score);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 masterRotation = new Vector3(0, 0, this.transform.position.z);
+        foreach  (GameObject representation in representations)
+        {
+            representation.transform.rotation = Quaternion.Euler(masterRotation);
+        }
     }
 
-    public void addScore()
-    {
-        Score++;
-    }
-
-    public void reduceScore()
-    {
-        if (Score > 0)
-            Score--;
-    }
 
 }

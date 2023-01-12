@@ -12040,7 +12040,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f911598c2052864ab89c6d9d53709c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 8092168502097880020}
+  representations:
+  - {fileID: 1152389710}
+  - {fileID: 773987040}
+  - {fileID: 112183785}
+  - {fileID: 1112095356}
+  - {fileID: 2021368886}
+  - {fileID: 214941066}
+  - {fileID: 1345888234}
+  - {fileID: 90817722}
+  - {fileID: 26220081}
 --- !u!114 &1921287141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13255,16 +13264,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8092168502022315565, guid: 8b557ade2f6d9eb4f81677ad0d2f4574, type: 3}
+      propertyPath: m_text
+      value: Rotate the puzzle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b557ade2f6d9eb4f81677ad0d2f4574, type: 3}
---- !u!114 &8092168502097880020 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8092168502022315565, guid: 8b557ade2f6d9eb4f81677ad0d2f4574, type: 3}
-  m_PrefabInstance: {fileID: 8092168502097880019}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
