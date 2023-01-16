@@ -5,19 +5,28 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] representations;
+
+    [SerializeField] 
+    private GameObject masterMark;
+
+    private Quaternion transformation;
     // Start is called before the first frame update
     void Start()
     {
         
     }
+    
+    void OnEnable()
+    {
+        transformation = masterMark.transform.rotation;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 masterRotation = new Vector3(0, 0, this.transform.position.z);
         foreach  (GameObject representation in representations)
         {
-            representation.transform.rotation = Quaternion.Euler(masterRotation);
+            representation.transform.rotation = masterMark.transform.rotation * Quaternion.Inverse(transformation);
         }
     }
 
